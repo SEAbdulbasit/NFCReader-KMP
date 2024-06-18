@@ -18,6 +18,7 @@ import platform.Foundation.NSData
 import platform.Foundation.NSError
 import platform.darwin.NSObject
 import platform.posix.memcpy
+import kotlinx.coroutines.CoroutineExceptionHandler
 
 
 /**
@@ -33,9 +34,9 @@ actual class NFCManager() : NSObject(), NFCNDEFReaderSessionDelegateProtocol {
     @Composable
     actual fun registerApp() {
         if (NFCNDEFReaderSession.readingAvailable()) {
-            val session = NFCNDEFReaderSession(this, null, false)
-            session.alertMessage = "Hold your iPhone near the item to learn more about it."
-            session.beginSession()
+                val session = NFCNDEFReaderSession(this, null, false)
+                session.alertMessage = "Hold your iPhone near the item to learn more about it."
+                session.beginSession()
         }
     }
 
@@ -55,6 +56,7 @@ actual class NFCManager() : NSObject(), NFCNDEFReaderSessionDelegateProtocol {
     }
 
     override fun readerSession(session: NFCNDEFReaderSession, didInvalidateWithError: NSError) {
+        println("reader session error ${didInvalidateWithError.description}")
     }
 }
 

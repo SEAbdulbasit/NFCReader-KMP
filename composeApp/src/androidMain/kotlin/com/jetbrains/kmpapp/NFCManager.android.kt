@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
+@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class NFCManager : NfcAdapter.ReaderCallback {
     private var mNfcAdapter: NfcAdapter? = null
 
@@ -24,10 +25,9 @@ actual class NFCManager : NfcAdapter.ReaderCallback {
 
     @Composable
     actual fun registerApp() {
-        mNfcAdapter = NfcAdapter.getDefaultAdapter(LocalContext.current);
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(LocalContext.current)
 
         if (mNfcAdapter != null) {
-
             val options = Bundle()
             // Work around for some broken Nfc firmware implementations that poll the card too fast
             options.putInt(NfcAdapter.EXTRA_READER_PRESENCE_CHECK_DELAY, 500)
@@ -53,11 +53,8 @@ actual class NFCManager : NfcAdapter.ReaderCallback {
         if (ndefRecordsCount > 0) {
             for (i in 0 until ndefRecordsCount) {
                 val payload = String(record[i].payload, Charsets.UTF_8)
-                val regex = "([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})".toRegex()
-                val matchResult = regex.find(payload)
-                val macAddress = matchResult?.value // Extract the mac address
                 scope.launch {
-                    _tagData.emit(macAddress.toString())
+                    _tagData.emit(payload.toString())
                 }
             }
         }
