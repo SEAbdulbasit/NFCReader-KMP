@@ -16,3 +16,13 @@ This application is developed with the goal of demonstrating the power of Kotlin
 
 
 ## Demo
+
+
+### iOS Demo
+
+https://github.com/SEAbdulbasit/NFCReader-KMP/assets/33172684/91afe692-ed65-4272-93fa-2f32408a8680
+
+
+### Android Demo
+
+
